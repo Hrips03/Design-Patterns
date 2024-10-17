@@ -1,0 +1,27 @@
+#include "menu.hpp"
+
+void Menu::displayMainMenu()
+{
+    std::cout << "Menu\n\n";
+    std::cout << "Play\n";
+    std::cout << "Rules\n";
+    std::cout << "Exit\n\n";
+}
+
+void Menu::displayPlayMenu()
+{
+    std::cout << "Choose difficulty\n\n";
+    std::cout << "Easy\n";
+    std::cout << "Medium\n";
+    std::cout << "Hard\n\n";
+    std::cout << "back\n";
+}
+
+void Menu::displayRulesMenu()
+{
+    std::cout << "Rules\n\n";
+    std::cout << "Some rules\n\n";
+    std::cout << "back\n";
+}
+
+
