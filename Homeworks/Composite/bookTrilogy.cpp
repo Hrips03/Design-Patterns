@@ -9,16 +9,6 @@ int BookTrilogy::getPrice()
     return result;
 }
 
-std::string BookTrilogy::getName()
-{
-    return name;
-}
-
-void BookTrilogy::setName(std::string name)
-{
-    this->name = name;
-}
-
 void BookTrilogy::addBook(IBook* book)
 {
     books.push_back(book);

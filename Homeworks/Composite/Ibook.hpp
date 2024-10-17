@@ -3,10 +3,14 @@
 
 class IBook
 {
+  int price = 0;
+  std::string name;
+  
 public:
-    virtual int getPrice() = 0;
-      virtual std::string getName() = 0;
-    virtual void setName(std::string name) = 0;  
+    virtual int getPrice();
+    virtual std::string getName();
+    virtual void setName(std::string name);  
+    virtual void setPrice(int price);
 
     virtual ~IBook() = default;
 };
