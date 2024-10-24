@@ -41,6 +41,7 @@ public:
         return new Airplane();
     }
 };
+
 class Airplane : public Vehicle
 {
 public:
@@ -49,13 +50,14 @@ public:
         std::cout << "This is an Airplane." << std::endl;
     }
 };
+
 int main()
 {
     VehicleFactory *carFactory = new CarFactory();
-    VehicleFactory *motorcycleFactory = new AirplaneFactory();
+    VehicleFactory *airplaneFactory = new AirplaneFactory();
 
     Vehicle *car = carFactory->createVehicle();
-    Vehicle *airplane = motorcycleFactory->createVehicle();
+    Vehicle *airplane = airplaneFactory->createVehicle();
 
     car->printDetails();
     airplane->printDetails();
