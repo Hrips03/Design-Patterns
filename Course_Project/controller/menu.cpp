@@ -2,6 +2,7 @@
 
 void Menu::displayMainMenu()
 {
+    std::cout << "Welcome to the Main Menu! Please make a choice.\n\n";
     std::cout << "Menu\n\n";
     std::cout << "Play\n";
     std::cout << "Rules\n";
@@ -14,14 +15,14 @@ void Menu::displayPlayMenu()
     std::cout << "Easy\n";
     std::cout << "Medium\n";
     std::cout << "Hard\n\n";
-    std::cout << "back\n";
+    std::cout << "back\n\n";
 }
 
 void Menu::displayRulesMenu()
 {
     std::cout << "Rules\n\n";
     std::cout << "Some rules\n\n";
-    std::cout << "back\n";
+    std::cout << "back\n\n";
 }
 
 

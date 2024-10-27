@@ -1,10 +1,16 @@
+#pragma once
 #include "menu.hpp"
+#include "../view/selector.hpp"
+// Forward declaration of Controller
+class Controller;
 
 class eventHandler : public Menu
 {
     std::string choice;
+    Controller* contrPtr;
+
 public:
-    eventHandler();
+    eventHandler(Controller* controller);
     void getMenuChoice();
-    bool handleMenuChoice() override;
+    void handleMenuChoice();
 };
