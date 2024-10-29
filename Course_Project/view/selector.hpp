@@ -5,5 +5,5 @@
 #include "GridFactory.hpp"
 #include "GridsFactories.hpp"
 
-void selector(const std::string& difficulty);
+IGrid* selector(const std::string& difficulty);
     

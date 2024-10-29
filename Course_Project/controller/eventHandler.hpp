@@ -1,16 +1,20 @@
 #pragma once
 #include "menu.hpp"
+#include "controller.hpp"
 #include "../view/selector.hpp"
-// Forward declaration of Controller
+
 class Controller;
 
 class eventHandler : public Menu
 {
     std::string choice;
-    Controller* contrPtr;
+    Controller* m_contrPtr;
 
 public:
-    eventHandler(Controller* controller);
+    explicit eventHandler(Controller* controller);
     void getMenuChoice();
     void handleMenuChoice();
+    void processInput(IGrid* grid);
+
 };
+

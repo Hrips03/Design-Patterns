@@ -1,8 +1,6 @@
 #include "eventHandler.hpp"
-#include "controller.hpp"
-#include "../view/selector.hpp" // Only includes the declaration
 
-eventHandler::eventHandler(Controller *controller) : contrPtr(controller)
+eventHandler::eventHandler(Controller *controller) : m_contrPtr(controller)
 {
     displayMainMenu();
 }
@@ -17,11 +15,15 @@ void eventHandler::getMenuChoice()
 
 void eventHandler::handleMenuChoice()
 {
-    if (choice == "Easy" || choice == "easy" || choice == "Medium" || choice == "medium" || choice == "Hard" || choice == "hard")
-        selector(choice); // Uses the selector function
+    getMenuChoice();
+
+    if (choice == "Easy" || choice == "easy" || choice == "Medium" || choice == "medium" || choice == "Hard" || choice == "hard") {
+        IGrid* grid = selector(choice);
+        grid->draw();
+        processInput(grid);
+    } 
     else
     {
-        getMenuChoice();
         if (choice == "Play" || choice == "play")
             displayPlayMenu();
         else if (choice == "Rules" || choice == "rules")
@@ -29,8 +31,36 @@ void eventHandler::handleMenuChoice()
         else if (choice == "back" || choice == "Back")
             displayMainMenu();
         else if (choice == "exit" || choice == "Exit")
-            contrPtr->exit();
+            m_contrPtr->exit();
         else
             std::cout << "Invalid choice, try again." << std::endl;
+    }
+}
+
+void eventHandler::processInput(IGrid* grid) {
+    std::string input;
+    while (true) {
+        std::cout << "Enter a cell position (e.g., 'mark 8 7', 'reveal 3 5' or type 'exit' to go back): ";
+        
+        std::string command;
+        int row, col;
+
+        std::cin >> command;
+
+        if (command == "exit") {
+           displayMainMenu();
+           break;
+        }
+
+        std::cin >> row >> col;
+        if (command == "mark") {
+            grid->markCell(row, col); 
+        } else if (command == "reveal") {
+            grid->revealCell(row, col); 
+        } else {
+            std::cout << "Invalid command. Please use 'mark' or 'reveal'." << std::endl;
+        }
+
+        grid->draw();  
     }
 }
