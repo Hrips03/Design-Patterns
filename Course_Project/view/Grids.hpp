@@ -2,40 +2,58 @@
 #include "IGrid.hpp"
 #include <vector>
 
-class EasyGrid : public IGrid {
+class EasyGrid : public IGrid
+{
 public:
     EasyGrid();
     void draw() override;
     void markCell(int row, int col) override;
-    void revealCell(int row, int col) override;
-
+    void unmarkCell(int row, int col) override;
+    bool revealCell(int row, int col) override;
+    void generateGrid() override;
+    bool checkWin() const override;
 private:
-    std::vector<std::vector<std::string>> grid;
-    // int generateCellValue(int row, int col);
+    const int totalCells = 81;
+    const int totalMines = 10;
+    int revealedCells = 0;
+    std::vector<std::vector<std::string>> m_emptyGrid;
+    std::vector<std::vector<std::string>> m_fullGrid;
 };
 
-// MediumGrid class
-class MediumGrid : public IGrid {
+
+class MediumGrid : public IGrid
+{
 public:
     MediumGrid();
     void draw() override;
     void markCell(int row, int col) override;
-    void revealCell(int row, int col) override;
-
+    void unmarkCell(int row, int col) override;
+    bool revealCell(int row, int col) override;
+    void generateGrid() override;
+    bool checkWin() const override;
 private:
-    std::vector<std::vector<std::string>> grid;
-    // int generateCellValue(int row, int col);
+    const int totalCells = 256;
+    const int totalMines = 40;
+    int revealedCells = 0;
+    std::vector<std::vector<std::string>> m_emptyGrid;
+    std::vector<std::vector<std::string>> m_fullGrid;
 };
 
-// HardGrid class
-class HardGrid : public IGrid {
+
+class HardGrid : public IGrid
+{
 public:
     HardGrid();
     void draw() override;
     void markCell(int row, int col) override;
-    void revealCell(int row, int col) override;
-
+    void unmarkCell(int row, int col) override;
+    bool revealCell(int row, int col) override;
+    void generateGrid() override;
+    bool checkWin() const override;
 private:
-    std::vector<std::vector<std::string>> grid;
-    // int generateCellValue(int row, int col);
+    const int totalCells = 480;
+    const int totalMines = 99;
+    int revealedCells = 0;
+    std::vector<std::vector<std::string>> m_emptyGrid;
+    std::vector<std::vector<std::string>> m_fullGrid;
 };

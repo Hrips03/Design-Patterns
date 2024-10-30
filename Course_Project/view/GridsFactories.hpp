@@ -4,17 +4,22 @@
 class EasyGridFactory : public GridFactory
 {
 public:
-    IGrid* createGrid() override;
+    IGrid* createEmptyGrid() override;
+    //IGrid* generateGrid() override;
 };
 
 class MediumGridFactory : public GridFactory
 {
 public:
-    IGrid* createGrid() override;
+    IGrid* createEmptyGrid() override;
+    // IGrid* generateGrid() override;
+
 };
 
 class HardGridFactory : public GridFactory
 {
 public:
-    IGrid* createGrid() override;
+    IGrid* createEmptyGrid() override;
+    // IGrid* generateGrid() override;
+
 };

@@ -1,14 +1,15 @@
 #include "GridsFactories.hpp"
 #include "Grids.hpp"
 
-IGrid* EasyGridFactory ::createGrid() {
+IGrid* EasyGridFactory ::createEmptyGrid() {
    return new EasyGrid();
 }
 
-IGrid* MediumGridFactory ::createGrid() {
+IGrid* MediumGridFactory ::createEmptyGrid() {
     return new MediumGrid();
 }
 
-IGrid* HardGridFactory ::createGrid() {
+IGrid* HardGridFactory ::createEmptyGrid() {
     return new HardGrid();
 }
+

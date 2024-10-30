@@ -2,6 +2,7 @@
 #include "menu.hpp"
 #include "controller.hpp"
 #include "../view/selector.hpp"
+#include "../model/logic.hpp"
 
 class Controller;
 
