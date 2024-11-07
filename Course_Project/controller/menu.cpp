@@ -21,7 +21,7 @@ void Menu::displayPlayMenu()
 void Menu::displayRulesMenu()
 {
     std::cout << "Rules\n\n";
-    std::cout << "Some rules\n\n";
+    std::cout << "All non-mine cells must be\nopened without opening a mine.\n\n";
     std::cout << "back\n\n";
 }
 

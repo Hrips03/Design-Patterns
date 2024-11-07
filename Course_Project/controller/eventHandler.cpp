@@ -11,6 +11,7 @@ void eventHandler::getMenuChoice()
     std::cin >> choice;
     // std::cout << "Your choice is " << choice << std::endl
     //           << std::endl;
+    std::cout << std::endl;
 }
 
 void eventHandler::handleMenuChoice()
@@ -54,7 +55,7 @@ void eventHandler::processInput(IGrid *grid)
             end = false;
             break;
         }
-        std::cout << "Enter a cell position (e.g., 'mark 8 7', 'reveal 3 5' or type 'exit' to go back): ";
+        std::cout << "Enter a cell position (e.g., 'mark 8 7', 'reveal 3 5', 'unmark 6 4' or type 'exit' to go back): ";
 
         std::string command;
         int row, col;
@@ -71,6 +72,10 @@ void eventHandler::processInput(IGrid *grid)
         {
             grid->markCell(row, col);
         }
+        else if (command == "unmark")
+        {
+            grid->unmarkCell(row, col);
+        }
         else if (command == "reveal")
         {
             end = grid->revealCell(row, col);
@@ -78,8 +83,8 @@ void eventHandler::processInput(IGrid *grid)
             if (grid->checkWin())
             {
                 std::cout << "Congratulations! You've revealed all the non-mine cells. You win!" << std::endl;
-                displayMainMenu(); 
-                break; 
+                displayMainMenu();
+                break;
             }
         }
         else
@@ -89,4 +94,5 @@ void eventHandler::processInput(IGrid *grid)
 
         grid->draw();
     }
-}
+}//lightDB
+//user login password, scoreery pahel
