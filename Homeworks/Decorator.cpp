@@ -1,12 +1,12 @@
 #include <iostream>
 
-class Building
+class Building    //Component
 { 
 public:
     virtual void build() = 0;
 };
 
-class Flat : public Building
+class Flat : public Building  //Concrete Component 1
 {
 public:
     void build() override
@@ -15,7 +15,7 @@ public:
     }
 };
 
-class House : public Building
+class House : public Building  //Concrete Component 2
 {
 public:
     void build() override
@@ -24,7 +24,7 @@ public:
     }
 };
 
-class Decorator : public Building
+class Decorator : public Building  //Base Decorator
 {
     Building *m_building;
 
@@ -36,7 +36,7 @@ public:
     }
 };
 
-class WallColorDecortaor : public Decorator
+class WallColorDecortaor : public Decorator //Concrete Decorator 1
 {
     std::string m_color;
 
@@ -49,7 +49,7 @@ public:
     }
 };
 
-class WindowDecortaor : public Decorator
+class WindowDecortaor : public Decorator    //Concrete Decorator 2
 {
     std::string m_glassColor;
 
