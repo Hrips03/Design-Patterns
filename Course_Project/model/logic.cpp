@@ -52,8 +52,10 @@ void EasyGrid::generateGrid()
 
 bool EasyGrid::revealCell(int row, int col)
 {
-    if (row < 0 || row >= 9 || col < 0 || col >= 9 || m_emptyGrid[row][col] == m_fullGrid[row][col])
+    if (row < 0 || row >= 9 || col < 0 || col >= 9 || m_emptyGrid[row][col] == m_fullGrid[row][col]){
+        std::cout << "Input numbers should be less than or equal to 8.\n";
         return false;
+    }
 
     m_emptyGrid[row][col] = m_fullGrid[row][col];
 
@@ -79,7 +81,7 @@ bool EasyGrid::revealCell(int row, int col)
 
 bool EasyGrid::checkWin() const
 {
-    return (revealedCells == (totalCells - totalMines)); 
+    return (revealedCells == (totalCells - totalMines) || revealedCells == (totalCells - totalMines + 1));
 }
 
 void MediumGrid::generateGrid()
@@ -134,8 +136,10 @@ void MediumGrid::generateGrid()
 
 bool MediumGrid::revealCell(int row, int col)
 {
-    if (row < 0 || row >= 16 || col < 0 || col >= 16 || m_emptyGrid[row][col] == m_fullGrid[row][col])
+    if (row < 0 || row >= 16 || col < 0 || col >= 16 || m_emptyGrid[row][col] == m_fullGrid[row][col]){
+        std::cout << "Input numbers should be less than or equal to 15.\n";
         return false;
+    }
 
     m_emptyGrid[row][col] = m_fullGrid[row][col];
 
@@ -161,7 +165,7 @@ bool MediumGrid::revealCell(int row, int col)
 
 bool MediumGrid::checkWin() const
 {
-    return (revealedCells == (totalCells - totalMines)); 
+    return (revealedCells == (totalCells - totalMines) || revealedCells == (totalCells - totalMines + 1));
 }
 
 void HardGrid::generateGrid()
@@ -217,8 +221,10 @@ void HardGrid::generateGrid()
 
 bool HardGrid::revealCell(int row, int col)
 {
-    if (row < 0 || row >= 16 || col < 0 || col >= 30 || m_emptyGrid[row][col] == m_fullGrid[row][col])
+    if (row < 0 || row >= 16 || col < 0 || col >= 30 || m_emptyGrid[row][col] == m_fullGrid[row][col]){
+        std::cout << "Input numbers should be less than or equal to rows: 15, cols: 39.\n";
         return false;
+    }
 
     m_emptyGrid[row][col] = m_fullGrid[row][col];
     if (m_fullGrid[row][col] == "[💣]")
@@ -242,5 +248,5 @@ bool HardGrid::revealCell(int row, int col)
 
 bool HardGrid::checkWin() const
 {
-    return (revealedCells == (totalCells - totalMines)); 
+    return (revealedCells == (totalCells - totalMines) || revealedCells == (totalCells - totalMines + 1));
 }

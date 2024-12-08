@@ -14,7 +14,7 @@ public:
     bool checkWin() const override;
 private:
     const int totalCells = 81;
-    const int totalMines = 10;
+    int totalMines = 10;
     int revealedCells = 0;
     std::vector<std::vector<std::string>> m_emptyGrid;
     std::vector<std::vector<std::string>> m_fullGrid;
@@ -33,7 +33,7 @@ public:
     bool checkWin() const override;
 private:
     const int totalCells = 256;
-    const int totalMines = 40;
+    int totalMines = 40;
     int revealedCells = 0;
     std::vector<std::vector<std::string>> m_emptyGrid;
     std::vector<std::vector<std::string>> m_fullGrid;
@@ -52,7 +52,7 @@ public:
     bool checkWin() const override;
 private:
     const int totalCells = 480;
-    const int totalMines = 99;
+    int totalMines = 99;
     int revealedCells = 0;
     std::vector<std::vector<std::string>> m_emptyGrid;
     std::vector<std::vector<std::string>> m_fullGrid;

@@ -3,6 +3,7 @@
 #include "controller.hpp"
 #include "../view/selector.hpp"
 #include "../model/logic.hpp"
+#include "timer.hpp"
 
 class Controller;
 
@@ -15,7 +16,6 @@ public:
     explicit eventHandler(Controller* controller);
     void getMenuChoice();
     void handleMenuChoice();
-    void processInput(IGrid* grid);
-
+    void gameCycle(IGrid* grid);
 };
 

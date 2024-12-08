@@ -1,5 +1,6 @@
 #include <iostream>
 
+//Handler
 class AtmHandler
 {
     AtmHandler *m_succ;
@@ -18,6 +19,7 @@ public:
     }
 };
 
+//Concrete handler 1
 class DramHandler : public AtmHandler
 {
     int billValue;

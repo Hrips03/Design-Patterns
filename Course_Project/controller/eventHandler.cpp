@@ -24,7 +24,7 @@ void eventHandler::handleMenuChoice()
         // grid = gridGenerator(grid);
         grid->generateGrid();
         grid->draw();
-        processInput(grid);
+        gameCycle(grid);
     }
     else
     {
@@ -41,10 +41,12 @@ void eventHandler::handleMenuChoice()
     }
 }
 
-void eventHandler::processInput(IGrid *grid)
+void eventHandler::gameCycle(IGrid *grid)
 {
     std::string input;
     bool end = false;
+    Timer timer; 
+    timer.start();
 
     while (true)
     {
@@ -55,6 +57,7 @@ void eventHandler::processInput(IGrid *grid)
             end = false;
             break;
         }
+        std::cout << "Time: " << timer.getElapsedTime() << "\n";
         std::cout << "Enter a cell position (e.g., 'mark 8 7', 'reveal 3 5', 'unmark 6 4' or type 'exit' to go back): ";
 
         std::string command;
@@ -94,5 +97,7 @@ void eventHandler::processInput(IGrid *grid)
 
         grid->draw();
     }
-}//lightDB
-//user login password, scoreery pahel
+}
+
+// lightDB
+// user login password, scoreery pahel
