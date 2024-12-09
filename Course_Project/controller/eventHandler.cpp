@@ -8,9 +8,10 @@ eventHandler::eventHandler(Controller *controller) : m_contrPtr(controller)
 void eventHandler::getMenuChoice()
 {
     std::cout << "Enter your choice: ";
-    std::cin >> choice;
+    std::getline(std::cin, choice);
     // std::cout << "Your choice is " << choice << std::endl
     //           << std::endl;
+    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << std::endl;
 }
 
@@ -29,6 +30,12 @@ void eventHandler::handleMenuChoice()
     else
     {
         if (choice == "Play" || choice == "play")
+            displayLoginMenu();
+        else if(choice == "Sign In" || choice == "sign in")
+            displaySignInMenu();
+        else if(choice == "Sign up" || choice == "sign up")
+            displaySignUpMenu();
+        else if (choice == "Continue" || choice == "continue")
             displayPlayMenu();
         else if (choice == "Rules" || choice == "rules")
             displayRulesMenu();
