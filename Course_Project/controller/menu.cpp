@@ -27,50 +27,56 @@ void Menu::displayRulesMenu()
 
 void Menu::displayLoginMenu()
 {
-    std::cout << "      Sign In\n";
-    std::cout << "      Sign Up\n";
-    std::cout << "Continue without account\n\n";
+    std::cout << "   Sign In\n";
+    std::cout << "   Sign Up\n";
+    std::cout << "Continue as Guest\n\n";
     std::cout << "back\n\n";
 }
 
-void Menu::displaySignInMenu()
-{
+void Menu::displaySignInMenu() {
     std::string username;
     std::string password;
-    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear leftover newline
+
     std::cout << "Enter your username: ";
     std::getline(std::cin, username);
     std::cout << "Enter your password: ";
     std::getline(std::cin, password);
 
     SQLiteDB* db = SQLiteDB::getInstance();
-    if (db->checkCredentials(username, password))
-        displayPlayMenu(); 
-    else
-        displayMainMenu();  
+    if (db->checkCredentials(username, password)) {
+        User* user = new User(username, password); 
+        std::cout << "Login successful! Welcome, " << user->getUsername() << ".\n";
+        displayPlayMenu();
+    } else {
+        std::cout << "Invalid username or password.\n";
+        displayMainMenu();
+    }
 }
 
-void Menu::displaySignUpMenu()
-{
+void Menu::displaySignUpMenu() {
     std::string username;
     std::string password;
     std::string renterPassword;
-    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear leftover newline
+
     std::cout << "Enter your username: ";
     std::getline(std::cin, username);
     std::cout << "Enter your password: ";
     std::getline(std::cin, password);
     std::cout << "Renter your password: ";
     std::getline(std::cin, renterPassword);
-    while (password != renterPassword)
-    {
+
+    while (password != renterPassword) {
         std::cout << "Passwords do not match. Reenter your password: ";
         std::getline(std::cin, renterPassword);
     }
 
     SQLiteDB* db = SQLiteDB::getInstance();
-    if (db->addUser(username, password))
+    if (db->addUser(username, password)) {
+        User* user = new User(username, password); 
+        std::cout << "Account created successfully! Welcome, " << user->getUsername() << ".\n";
         displayPlayMenu();
-    else
+    } else {
+        std::cout << "Failed to create account. Username might already exist.\n";
         displayMainMenu();
+    }
 }

@@ -52,12 +52,16 @@ void EasyGrid::generateGrid()
 
 bool EasyGrid::revealCell(int row, int col)
 {
-    if (row < 0 || row >= 9 || col < 0 || col >= 9 || m_emptyGrid[row][col] == m_fullGrid[row][col]){
-        std::cout << "Input numbers should be less than or equal to 8.\n";
+   
+    if (row < 0 || row >= 9 || col < 0 || col >= 9)
         return false;
-    }
+    
+    if (m_emptyGrid[row][col] == m_fullGrid[row][col])
+        return false;
+    
 
     m_emptyGrid[row][col] = m_fullGrid[row][col];
+
 
     if (m_fullGrid[row][col] == "[💣]")
     {
@@ -65,19 +69,25 @@ bool EasyGrid::revealCell(int row, int col)
         return true;
     }
 
+
     revealedCells++;
 
     if (m_fullGrid[row][col] == "[🔲]")
+    {
         for (int di = -1; di <= 1; di++)
+        {
             for (int dj = -1; dj <= 1; dj++)
-                if ((di != 0 || dj != 0) && row + di >= 0 && row + di < 9 && col + dj >= 0 && col + dj < 9)
-                {
-                    revealedCells++;
-                    revealCell(row + di, col + dj);
-                }
+            {
+                if (di == 0 && dj == 0)
+                    continue;
 
+                revealCell(row + di, col + dj);
+            }
+        }
+    }
     return false;
 }
+
 
 bool EasyGrid::checkWin() const
 {
@@ -136,7 +146,8 @@ void MediumGrid::generateGrid()
 
 bool MediumGrid::revealCell(int row, int col)
 {
-    if (row < 0 || row >= 16 || col < 0 || col >= 16 || m_emptyGrid[row][col] == m_fullGrid[row][col]){
+    if (row < 0 || row >= 16 || col < 0 || col >= 16 || m_emptyGrid[row][col] == m_fullGrid[row][col])
+    {
         std::cout << "Input numbers should be less than or equal to 15.\n";
         return false;
     }
@@ -221,7 +232,8 @@ void HardGrid::generateGrid()
 
 bool HardGrid::revealCell(int row, int col)
 {
-    if (row < 0 || row >= 16 || col < 0 || col >= 30 || m_emptyGrid[row][col] == m_fullGrid[row][col]){
+    if (row < 0 || row >= 16 || col < 0 || col >= 30 || m_emptyGrid[row][col] == m_fullGrid[row][col])
+    {
         std::cout << "Input numbers should be less than or equal to rows: 15, cols: 39.\n";
         return false;
     }

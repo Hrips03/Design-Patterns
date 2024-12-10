@@ -1,13 +1,11 @@
 #include "database.hpp"
 
 // Initialize the singleton instance pointer
-SQLiteDB *SQLiteDB::instance = nullptr;
+SQLiteDB* SQLiteDB::instance = nullptr;
 
-// Private constructor
-SQLiteDB::SQLiteDB(const std::string &db_name)
-{
-    if (sqlite3_open(db_name.c_str(), &db) != SQLITE_OK)
-    {
+// Constructor
+SQLiteDB::SQLiteDB(const std::string& db_name) {
+    if (sqlite3_open(db_name.c_str(), &db) != SQLITE_OK) {
         std::cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
         db = nullptr;
     }
@@ -15,26 +13,21 @@ SQLiteDB::SQLiteDB(const std::string &db_name)
 }
 
 // Destructor
-SQLiteDB::~SQLiteDB()
-{
-    if (db)
-        sqlite3_close(db);
+SQLiteDB::~SQLiteDB() {
+    if (db) sqlite3_close(db);
 }
 
 // Get the singleton instance
-SQLiteDB *SQLiteDB::getInstance(const std::string &db_name)
-{
-    if (instance == nullptr)
-    {
+SQLiteDB* SQLiteDB::getInstance(const std::string& db_name) {
+    if (instance == nullptr) {
         instance = new SQLiteDB(db_name);
     }
     return instance;
 }
 
 // Initialize database tables
-bool SQLiteDB::initialize()
-{
-    const char *users_table = R"(
+bool SQLiteDB::initialize() {
+    const char* users_table = R"(
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE NOT NULL,
@@ -42,7 +35,7 @@ bool SQLiteDB::initialize()
         );
     )";
 
-    const char *scores_table = R"(
+    const char* scores_table = R"(
         CREATE TABLE IF NOT EXISTS scores (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER NOT NULL,
@@ -52,17 +45,14 @@ bool SQLiteDB::initialize()
         );
     )";
 
-    char *error_message = nullptr;
-
-    if (sqlite3_exec(db, users_table, nullptr, nullptr, &error_message) != SQLITE_OK)
-    {
+    char* error_message = nullptr;
+    if (sqlite3_exec(db, users_table, nullptr, nullptr, &error_message) != SQLITE_OK) {
         std::cerr << "Error creating users table: " << error_message << std::endl;
         sqlite3_free(error_message);
         return false;
     }
 
-    if (sqlite3_exec(db, scores_table, nullptr, nullptr, &error_message) != SQLITE_OK)
-    {
+    if (sqlite3_exec(db, scores_table, nullptr, nullptr, &error_message) != SQLITE_OK) {
         std::cerr << "Error creating scores table: " << error_message << std::endl;
         sqlite3_free(error_message);
         return false;
@@ -73,31 +63,9 @@ bool SQLiteDB::initialize()
 
 // Add user with default scores
 bool SQLiteDB::addUser(const std::string& username, const std::string& password) {
-    // Check if the username already exists
-    const char* check_user = "SELECT COUNT(*) FROM users WHERE username = ?;";
+    const char* insert_user = "INSERT INTO users (username, password) VALUES (?, ?);";
     sqlite3_stmt* stmt;
 
-    if (sqlite3_prepare_v2(db, check_user, -1, &stmt, nullptr) != SQLITE_OK) {
-        std::cerr << "Error preparing check user statement: " << sqlite3_errmsg(db) << std::endl;
-        return false;
-    }
-
-    sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
-
-    int count = 0;
-    if (sqlite3_step(stmt) == SQLITE_ROW) {
-        count = sqlite3_column_int(stmt, 0);
-    }
-
-    sqlite3_finalize(stmt);
-
-    if (count > 0) {
-        std::cerr << "User \"" << username << "\" already exists." << std::endl;
-        return false; // User already exists
-    }
-
-    // Insert the new user
-    const char* insert_user = "INSERT INTO users (username, password) VALUES (?, ?);";
     if (sqlite3_prepare_v2(db, insert_user, -1, &stmt, nullptr) != SQLITE_OK) {
         std::cerr << "Error preparing insert statement: " << sqlite3_errmsg(db) << std::endl;
         return false;
@@ -114,13 +82,11 @@ bool SQLiteDB::addUser(const std::string& username, const std::string& password)
 
     sqlite3_finalize(stmt);
 
-    // Add default scores for the new user
     int user_id = sqlite3_last_insert_rowid(db);
+
     const char* insert_scores = R"(
         INSERT INTO scores (user_id, difficulty) VALUES
-        (?, 'Easy'),
-        (?, 'Medium'),
-        (?, 'Hard');
+        (?, 'Easy'), (?, 'Medium'), (?, 'Hard');
     )";
 
     if (sqlite3_prepare_v2(db, insert_scores, -1, &stmt, nullptr) != SQLITE_OK) {
@@ -128,9 +94,9 @@ bool SQLiteDB::addUser(const std::string& username, const std::string& password)
         return false;
     }
 
-    sqlite3_bind_int(stmt, 1, user_id);
-    sqlite3_bind_int(stmt, 2, user_id);
-    sqlite3_bind_int(stmt, 3, user_id);
+    for (int i = 1; i <= 3; ++i) {
+        sqlite3_bind_int(stmt, i, user_id);
+    }
 
     if (sqlite3_step(stmt) != SQLITE_DONE) {
         std::cerr << "Error adding default scores: " << sqlite3_errmsg(db) << std::endl;
@@ -143,17 +109,15 @@ bool SQLiteDB::addUser(const std::string& username, const std::string& password)
 }
 
 // Update best score
-bool SQLiteDB::updateBestScore(const std::string &username, const std::string &difficulty, const std::string &best_score)
-{
-    const char *update_score = R"(
+bool SQLiteDB::updateBestScore(const std::string& username, const std::string& difficulty, const std::string& best_score) {
+    const char* update_score = R"(
         UPDATE scores
         SET best_score = ?
         WHERE user_id = (SELECT id FROM users WHERE username = ?) AND difficulty = ?;
     )";
 
-    sqlite3_stmt *stmt;
-    if (sqlite3_prepare_v2(db, update_score, -1, &stmt, nullptr) != SQLITE_OK)
-    {
+    sqlite3_stmt* stmt;
+    if (sqlite3_prepare_v2(db, update_score, -1, &stmt, nullptr) != SQLITE_OK) {
         std::cerr << "Error preparing update statement: " << sqlite3_errmsg(db) << std::endl;
         return false;
     }
@@ -162,8 +126,7 @@ bool SQLiteDB::updateBestScore(const std::string &username, const std::string &d
     sqlite3_bind_text(stmt, 2, username.c_str(), -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 3, difficulty.c_str(), -1, SQLITE_STATIC);
 
-    if (sqlite3_step(stmt) != SQLITE_DONE)
-    {
+    if (sqlite3_step(stmt) != SQLITE_DONE) {
         std::cerr << "Error updating score: " << sqlite3_errmsg(db) << std::endl;
         sqlite3_finalize(stmt);
         return false;
@@ -173,37 +136,7 @@ bool SQLiteDB::updateBestScore(const std::string &username, const std::string &d
     return true;
 }
 
-// Fetch scores
-void SQLiteDB::getScores(const std::string &username)
-{
-    const char *fetch_scores = R"(
-        SELECT difficulty, best_score
-        FROM scores
-        WHERE user_id = (SELECT id FROM users WHERE username = ?);
-    )";
 
-    sqlite3_stmt *stmt;
-    if (sqlite3_prepare_v2(db, fetch_scores, -1, &stmt, nullptr) != SQLITE_OK)
-    {
-        std::cerr << "Error preparing fetch statement: " << sqlite3_errmsg(db) << std::endl;
-        return;
-    }
-
-    sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
-
-    std::cout << "Scores for " << username << ":\n";
-    while (sqlite3_step(stmt) == SQLITE_ROW)
-    {
-        std::string difficulty = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 0));
-        std::string best_score = reinterpret_cast<const char *>(sqlite3_column_text(stmt, 1));
-        std::cout << difficulty << ": " << best_score << std::endl;
-    }
-
-    sqlite3_finalize(stmt);
-}
-
-
-// Check if the username and password are correct
 bool SQLiteDB::checkCredentials(const std::string& username, const std::string& password) {
     const char* check_credentials = R"(
         SELECT COUNT(*) FROM users WHERE username = ? AND password = ?;
@@ -226,4 +159,4 @@ bool SQLiteDB::checkCredentials(const std::string& username, const std::string& 
     sqlite3_finalize(stmt);
 
     return count > 0; // Return true if credentials match, false otherwise
-}
+} 
