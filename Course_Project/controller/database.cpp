@@ -1,9 +1,7 @@
 #include "database.hpp"
 
-// Initialize the singleton instance pointer
 SQLiteDB* SQLiteDB::instance = nullptr;
 
-// Constructor
 SQLiteDB::SQLiteDB(const std::string& db_name) {
     if (sqlite3_open(db_name.c_str(), &db) != SQLITE_OK) {
         std::cerr << "Failed to open database: " << sqlite3_errmsg(db) << std::endl;
@@ -12,12 +10,11 @@ SQLiteDB::SQLiteDB(const std::string& db_name) {
     initialize();
 }
 
-// Destructor
 SQLiteDB::~SQLiteDB() {
     if (db) sqlite3_close(db);
 }
 
-// Get the singleton instance
+
 SQLiteDB* SQLiteDB::getInstance(const std::string& db_name) {
     if (instance == nullptr) {
         instance = new SQLiteDB(db_name);
@@ -25,7 +22,7 @@ SQLiteDB* SQLiteDB::getInstance(const std::string& db_name) {
     return instance;
 }
 
-// Initialize database tables
+
 bool SQLiteDB::initialize() {
     const char* users_table = R"(
         CREATE TABLE IF NOT EXISTS users (
@@ -61,7 +58,7 @@ bool SQLiteDB::initialize() {
     return true;
 }
 
-// Add user with default scores
+
 bool SQLiteDB::addUser(const std::string& username, const std::string& password) {
     const char* insert_user = "INSERT INTO users (username, password) VALUES (?, ?);";
     sqlite3_stmt* stmt;
@@ -108,7 +105,7 @@ bool SQLiteDB::addUser(const std::string& username, const std::string& password)
     return true;
 }
 
-// Update best score
+
 bool SQLiteDB::updateBestScore(const std::string& username, const std::string& difficulty, const std::string& best_score) {
     const char* update_score = R"(
         UPDATE scores
@@ -158,5 +155,5 @@ bool SQLiteDB::checkCredentials(const std::string& username, const std::string& 
 
     sqlite3_finalize(stmt);
 
-    return count > 0; // Return true if credentials match, false otherwise
+    return count > 0; 
 } 

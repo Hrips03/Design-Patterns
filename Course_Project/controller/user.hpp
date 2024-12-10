@@ -2,23 +2,15 @@
 #include <string>
 #include <map>
 
-class User {
-private:
+class User
+{
     std::string username;
     std::string password;
-    std::map<std::string, std::string> bestScores; // Maps difficulty levels to scores
+    std::map<std::string, std::string> bestScores;
 
 public:
-    // Constructor
-    User(const std::string& username, const std::string& password);
-
-    // Getters
-    const std::string& getUsername() const;
-    std::string getBestScore(const std::string& difficulty) const;
-
-    // Setters
-    void setBestScore(const std::string& difficulty, const std::string& score);
-
-    // Utility functions
-   
+    User(const std::string &username, const std::string &password);
+    const std::string &getUsername() const;
+    std::string getBestScore(const std::string &difficulty) const;
+    void setBestScore(const std::string &difficulty, const std::string &score);
 };
