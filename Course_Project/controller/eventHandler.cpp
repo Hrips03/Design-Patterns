@@ -1,7 +1,7 @@
 #include "eventHandler.hpp"
 
 eventHandler::eventHandler(Controller* controller)
-    : m_contrPtr(controller), m_user(nullptr) { // Initialize user to nullptr
+    : m_contrPtr(controller), m_user(nullptr) { 
     displayMainMenu();
 }
 
@@ -37,9 +37,6 @@ void eventHandler::getMenuChoice()
 {
     std::cout << "Enter your choice: ";
     std::getline(std::cin, choice);
-    // std::cout << "Your choice is " << choice << std::endl
-    //           << std::endl;
-    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::cout << std::endl;
 }
 

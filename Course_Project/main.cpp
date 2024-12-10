@@ -1,6 +1,6 @@
 #include "controller/controller.hpp"
 
 int main(){
-    Controller ob;
-    ob.run();
+    Controller ctrl;
+    ctrl.run();
 }

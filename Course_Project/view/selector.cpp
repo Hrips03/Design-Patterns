@@ -3,8 +3,6 @@
 IGrid* selector(const std::string& difficulty) {
     if (difficulty == "Easy" || difficulty == "easy") {
         GridFactory* easyFactory = new EasyGridFactory();
-        //easyFactory->createEmptyGrid();
-        //easyFactory->generateGrid();
         return easyFactory->createEmptyGrid();
 
     } 
