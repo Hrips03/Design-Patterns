@@ -1,7 +1,8 @@
 #include "eventHandler.hpp"
 
 eventHandler::eventHandler(Controller* controller)
-    : m_contrPtr(controller), m_user(nullptr) { 
+    : m_contrPtr(controller), m_user(nullptr) {
+    std::cout << "eventHandler Controller\n";
     displayMainMenu();
 }
 

@@ -1,0 +1,11 @@
+debug/controller.o
+debug/database.o
+debug/eventHandler.o
+debug/menu.o
+debug/timer.o
+debug/user.o
+debug/logic.o
+debug/Grids.o
+debug/GridsFactories.o
+debug/selector.o
+debug/main.o
