@@ -9,3 +9,4 @@ release/Grids.o
 release/GridsFactories.o
 release/selector.o
 release/main.o
+release/moc_menu.o

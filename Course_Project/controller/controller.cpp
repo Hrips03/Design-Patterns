@@ -1,15 +1,15 @@
-#include "controller.hpp"
+// #include "controller.hpp"
 
-void Controller::run()
-{
-    eventHandler ob(this);
-    while (m_isRunning)
-    {
-        ob.handleMenuChoice();
-    }
-}
+// void Controller::run()
+// {
+//     eventHandler ob(this);
+//     while (m_isRunning)
+//     {
+//         ob.handleMenuChoice();
+//     }
+// }
 
-void Controller::exit()
-{
-    m_isRunning = false;
-}
+// void Controller::exit()
+// {
+//     m_isRunning = false;
+// }

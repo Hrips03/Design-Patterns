@@ -9,3 +9,4 @@ debug/Grids.o
 debug/GridsFactories.o
 debug/selector.o
 debug/main.o
+debug/moc_menu.o

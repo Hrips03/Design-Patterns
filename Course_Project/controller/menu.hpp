@@ -1,15 +1,32 @@
-#pragma once
-#include <iostream>
+#include <QMainWindow>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QApplication>
 #include "database.hpp"
 #include "user.hpp"
 
-class Menu
-{
+class Menu : public QMainWindow {
+    Q_OBJECT
+
 public:
+    explicit Menu(QWidget *parent = nullptr);
+
+private slots:
     void displayMainMenu();
-    void displayPlayMenu();
+    void displayAuthMenu();         // Menu with Sign In, Sign Up, Continue as Guest
+    void displayPlayMenu();         // Menu to choose difficulty
     void displayRulesMenu();
-    void displayLoginMenu();
     void displaySignInMenu();
     void displaySignUpMenu();
+
+private:
+    QWidget *centralWidget;
+    QVBoxLayout *layout;
+
+    void clearLayout();
 };
+
+

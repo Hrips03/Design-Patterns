@@ -17,7 +17,7 @@ HEADERS = \
    $$PWD/view/Grids.hpp \
    $$PWD/view/GridsFactories.hpp \
    $$PWD/view/IGrid.hpp \
-   $$PWD/view/selector.hpp
+   $$PWD/view/selector.hpp \
 
 SOURCES = \
    $$PWD/controller/controller.cpp \
@@ -34,8 +34,11 @@ SOURCES = \
 
 # Include path for SQLite headers
 INCLUDEPATH += $$PWD/include
+QT += widgets
 
 # Link the SQLite library
 LIBS += -L$$PWD/lib -lsqlite3
+CONFIG += debug
 
 #DEFINES =
+
