@@ -18,15 +18,15 @@ MinesweeperView::MinesweeperView(int width, int height)
         exit(1);
     }
 
+    sf::Texture restartTexture;
+    if (!restartTexture.loadFromFile("smile_face.jpg"))  // Default texture (not clicked)
+    {
+        std::cerr << "Failed to load restart button texture!" << std::endl;
+    }
+
     restartButton.setSize(sf::Vector2f(38.f, 38.f));
     restartButton.setPosition(160.f, 0.f);
-    restartButton.setFillColor(sf::Color::Green);
-
-    restartText.setFont(font);
-    restartText.setString("R");
-    restartText.setCharacterSize(20);
-    restartText.setFillColor(sf::Color::White);
-    restartText.setPosition(170.f, 1.f);
+    restartButton.setTexture(&restartTexture);
 }
 
 sf::Color getNumberColor(int number)
@@ -74,22 +74,32 @@ void MinesweeperView::display(MinesweeperModel &model, sf::Time &elapsed)
     float restartButtonX = (windowSize.x - restartButton.getSize().x) / 2;
     restartButton.setPosition(restartButtonX, 0.f);
 
-    sf::FloatRect textBounds = restartText.getLocalBounds();
-    restartText.setOrigin(textBounds.left + textBounds.width / 2.f, textBounds.top + textBounds.height / 2.f);
-    restartText.setPosition(restartButton.getPosition().x + restartButton.getSize().x / 2,
-                            restartButton.getPosition().y + restartButton.getSize().y / 2);
+    
 
+    sf::Texture restartTexture;
+    if (!restartTexture.loadFromFile("smile_face.jpg"))  // Default texture (not clicked)
+    {
+        std::cerr << "Failed to load restart button texture!" << std::endl;
+    }
+
+    // Load texture for the game over button (or won button)
+    sf::Texture gameOverTexture;
+    if (!gameOverTexture.loadFromFile("sad_face.jpg"))  // Texture for game over or won state
+    {
+        std::cerr << "Failed to load game over texture!" << std::endl;
+    }
+
+    // Set the appropriate texture based on the game state
     if (model.gameOver || model.gameWon)
     {
-        restartButton.setFillColor(sf::Color::Red); 
+        restartButton.setTexture(&gameOverTexture);  // Change texture when game over or won
     }
     else
     {
-        restartButton.setFillColor(sf::Color::Green); 
+        restartButton.setTexture(&restartTexture);  // Default texture for active button
     }
 
     window.draw(restartButton);
-    window.draw(restartText);
 
     displayMinesRemaining(model.minesRemaining);
     displayTimer(elapsed);
@@ -270,5 +280,17 @@ void MinesweeperView::handleMouseClick(sf::Mouse::Button button, int x, int y, M
 
 void MinesweeperView::resetButton()
 {
-    restartButton.setFillColor(sf::Color::Green);
+    // Load the texture
+    sf::Texture buttonTexture;
+    if (!buttonTexture.loadFromFile("smile_face.jpg"))  // Replace with the path to your texture
+    {
+        std::cerr << "Failed to load button texture!" << std::endl;
+        return;  // Early return if texture fails to load
+    }
+
+    // Set the texture for the restart button
+    restartButton.setTexture(&buttonTexture);
+
+    // Optional: Ensure the button's size matches the texture size
+    restartButton.setSize(sf::Vector2f(buttonTexture.getSize().x, buttonTexture.getSize().y));
 }

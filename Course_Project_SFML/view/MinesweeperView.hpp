@@ -10,10 +10,7 @@ private:
     sf::Font font;
 
 public:
-    // sf::RectangleShape returnToMenuButton;
-    // sf::Text returnToMenuText;
     sf::RectangleShape restartButton;
-    sf::Text restartText;
     sf::RenderWindow window;
     MinesweeperView(int width, int height);
     void display(MinesweeperModel &model, sf::Time &elapsed);
