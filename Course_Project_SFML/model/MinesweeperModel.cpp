@@ -62,31 +62,28 @@ void MinesweeperModel::checkGameOver()
     {
         for (int j = 0; j < cols; ++j)
         {
-            // If the cell is a mine, check if it's flagged
             if (grid[i][j] == 9)
             {
-                if (!flagged[i][j])  // If a mine is not flagged, it's not a win yet
+                if (!flagged[i][j])  
                     allMinesFlagged = false;
             }
             else
             {
-                // If it's a non-mine cell, check if it's revealed
                 if (!revealed[i][j])
                     allRevealed = false;
             }
         }
     }
 
-    // Check for win condition
     if (allRevealed && allMinesFlagged)
     {
         gameWon = true;
     }
 
-    // Check for loss condition (game over)
+
     if (gameOver || gameWon)
     {
-        revealAllMines(); // Show all mines when the game ends
+        revealAllMines(); 
     }
 }
 
@@ -97,11 +94,11 @@ void MinesweeperModel::revealCell(int row, int col)
 
     revealed[row][col] = true;
 
-    if (grid[row][col] == 9)  // If the cell is a mine
+    if (grid[row][col] == 9)  
     {
         gameOver = true;
     }
-    else if (grid[row][col] == 0)  // If the cell is empty, reveal adjacent cells
+    else if (grid[row][col] == 0)  
     {
         for (int dr = -1; dr <= 1; ++dr)
         {
@@ -117,7 +114,7 @@ void MinesweeperModel::revealCell(int row, int col)
         }
     }
 
-    checkGameOver();  // Ensure win/loss is checked after revealing a cell
+    checkGameOver();  
 }
 
 void MinesweeperModel::toggleFlag(int row, int col)
@@ -131,7 +128,7 @@ void MinesweeperModel::toggleFlag(int row, int col)
     else
         ++minesRemaining;
 
-    checkGameOver();  // Check for win/loss after toggling a flag
+    checkGameOver();  
 }
 
 

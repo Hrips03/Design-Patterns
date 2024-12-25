@@ -9,7 +9,7 @@ Menu::Menu(const std::vector<std::string> &options, float width, float height)
         exit(1);
     }
 
-    selectedIndex = -1; // No selection by default
+    selectedIndex = -1;
     for (size_t i = 0; i < options.size(); ++i)
     {
         sf::Text option;
@@ -36,10 +36,10 @@ int Menu::getOptionClicked(const sf::Vector2f &mousePos)
     {
         if (menuOptions[i].getGlobalBounds().contains(mousePos))
         {
-            return i; // Return the index of the clicked option
+            return i; 
         }
     }
-    return -1; // No option clicked
+    return -1; 
 }
 
 void Menu::highlightOption(const sf::Vector2f &mousePos)
@@ -48,7 +48,7 @@ void Menu::highlightOption(const sf::Vector2f &mousePos)
     {
         if (menuOptions[i].getGlobalBounds().contains(mousePos))
         {
-            menuOptions[i].setFillColor(sf::Color::Red); // Highlight if the mouse is over the option
+            menuOptions[i].setFillColor(sf::Color::Red);
         }
         else
         {

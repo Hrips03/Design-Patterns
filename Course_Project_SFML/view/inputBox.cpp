@@ -18,7 +18,7 @@ InputBox::InputBox(float x, float y, float width, float height, const std::strin
 
     text.setFont(font);
     text.setFillColor(sf::Color::Black);
-    text.setCharacterSize(15); // Set the text size to make it smaller
+    text.setCharacterSize(15); 
     text.setPosition(x + 5, y + 5);
     text.setString(placeholder);
 }
@@ -28,17 +28,15 @@ void InputBox::handleInput(sf::Event &event)
 {
     if (isFocused && event.type == sf::Event::TextEntered)
     {
-        if (event.text.unicode == 8 && !inputText.empty())  // Backspace
+        if (event.text.unicode == 8 && !inputText.empty())  
         {
-            inputText.pop_back();  // Remove last character from the input
+            inputText.pop_back(); 
         }
-        else if (event.text.unicode >= 32 && event.text.unicode <= 126)  // Printable characters
+        else if (event.text.unicode >= 32 && event.text.unicode <= 126) 
         {
-            inputText += static_cast<char>(event.text.unicode);  // Add character to input
+            inputText += static_cast<char>(event.text.unicode);  
         }
-
-        //displayText = inputText;  // Update the display text to match the actual input
-        text.setString(inputText);  // Update the displayed text
+        text.setString(inputText); 
     }
 }
 
@@ -47,7 +45,7 @@ void InputBox::draw(sf::RenderWindow &window)
 {
     if (inputText.empty() && !isFocused)
     {
-        text.setString(placeholder); // Show placeholder when no input and not focused
+        text.setString(placeholder); 
     }
     else
     {
@@ -62,11 +60,11 @@ void InputBox::setFocus(bool focus)
     isFocused = focus;
     if (isFocused)
     {
-        box.setFillColor(sf::Color(200, 200, 255)); // Highlight input box on focus
+        box.setFillColor(sf::Color(200, 200, 255)); 
     }
     else
     {
-        box.setFillColor(sf::Color::White); // Default color
+        box.setFillColor(sf::Color::White); 
     }
 }
 

@@ -15,7 +15,6 @@ public:
     sf::FloatRect getGlobalBounds() const;
 
 private:
-    std::string displayText; // To store text for display
     sf::RectangleShape box;
     sf::Text text;
     sf::Font font;
@@ -25,4 +24,4 @@ private:
     bool isPassword;
 };
 
-#endif // INPUTBOX_HPP
+#endif 

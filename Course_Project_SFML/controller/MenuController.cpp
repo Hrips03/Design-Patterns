@@ -120,13 +120,13 @@ std::vector<int> MenuController::setMenu()
                 case MenuState::MAIN:
                     switch (mainMenu.getOptionClicked(mousePos))
                     {
-                    case 0: // Play
+                    case 0: 
                         currentState = MenuState::LOGIN;
                         break;
-                    case 1: // Rules
+                    case 1: 
                         currentState = MenuState::RULES;
                         break;
-                    case 2: // Exit
+                    case 2: 
                         window.close();
                         break;
                     }
@@ -135,31 +135,28 @@ std::vector<int> MenuController::setMenu()
                 case MenuState::LOGIN:
                     switch (loginMenu.getOptionClicked(mousePos))
                     {
-                    case 0: // Play
+                    case 0:
                         currentState = MenuState::SIGNIN;
                         break;
-                    case 1: // Rules
+                    case 1: 
                         currentState = MenuState::SIGNUP;
                         break;
-                    case 2: // Exit
+                    case 2: 
                         currentState = MenuState::DIFFICULTY;
                         break;
-                    case 3: // Exit
+                    case 3: 
                         currentState = MenuState::MAIN;
                         break;
                     }
                     break;
                 case MenuState::SIGNUP:
                     if (signUpButtons.getOptionClicked(mousePos) == 0)
-                    { // Sign Up
-                      // Validate credentials (mock validation)
+                    { 
                         SQLiteDB *db = SQLiteDB::getInstance();
                         if (db->addUser(signUpUsernameBox.getInputText(), signUpPasswordBox.getInputText()))
                         {
                             m_user = new User(signUpUsernameBox.getInputText(), signUpPasswordBox.getInputText());
                             std::cout << "Account created successfully! Welcome, " << m_user->getUsername() << ".\n";
-
-                            // confirmPasswordBox.getInputText()
                             isValidCredentials = true;
                             currentState = MenuState::DIFFICULTY;
                         }
@@ -176,8 +173,7 @@ std::vector<int> MenuController::setMenu()
 
                 case MenuState::SIGNIN:
                     if (signInButtons.getOptionClicked(mousePos) == 0)
-                    { // Sign In
-                        // Validate credentials (mock validation)
+                    { 
                         SQLiteDB *db = SQLiteDB::getInstance();
                         if (db->checkCredentials(usernameBox.getInputText(), passwordBox.getInputText()))
                         {
@@ -192,14 +188,14 @@ std::vector<int> MenuController::setMenu()
                         }
                     }
                     else if (signInButtons.getOptionClicked(mousePos) == 1)
-                    { // Back
+                    { 
                         currentState = MenuState::LOGIN;
                     }
                     break;
                 case MenuState::RULES:
                     switch (rulesMenu.getOptionClicked(mousePos))
                     {
-                    case 0: // Play
+                    case 0: 
                         currentState = MenuState::MAIN;
                         break;
                     }
@@ -207,22 +203,22 @@ std::vector<int> MenuController::setMenu()
                 case MenuState::DIFFICULTY:
                     switch (playMenu.getOptionClicked(mousePos))
                     {
-                    case 0: // Easy
+                    case 0: 
                         dimensions = {9, 9, 10};
                         m_difficulty = "Easy";
                         std::cout << "Easy difficulty selected.\n";
                         break;
-                    case 1: // Medium
+                    case 1: 
                         dimensions = {16, 16, 40};
                         m_difficulty = "Medium";
                         std::cout << "Medium difficulty selected.\n";
                         break;
-                    case 2: // Hard
+                    case 2: 
                         dimensions = {16, 30, 99};
                         m_difficulty = "Hard";
                         std::cout << "Hard difficulty selected.\n";
                         break;
-                    case 3: // Back
+                    case 3: 
                         currentState = MenuState::LOGIN;
                         break;
                     }
@@ -230,7 +226,7 @@ std::vector<int> MenuController::setMenu()
                 }
             }
 
-            // Handle text input for focused input box
+
             if (event.type == sf::Event::TextEntered)
             {
                 if (focusedBox)
@@ -325,7 +321,7 @@ std::vector<int> MenuController::setMenu()
             window.close();
         }
     }
-    getUserInfo();
+    
     return dimensions;
 }
 

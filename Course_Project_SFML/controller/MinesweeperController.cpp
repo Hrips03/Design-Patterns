@@ -8,8 +8,8 @@ MinesweeperController::MinesweeperController(int rows, int cols, int mines, std:
 void MinesweeperController::run()
 {
     sf::Clock clock;
-    sf::Time elapsedTime = sf::Time::Zero; // Accumulated time for the current game
-    sf::Time finalTime = sf::Time::Zero;   // Freezed time to display after game ends
+    sf::Time elapsedTime = sf::Time::Zero; 
+    sf::Time finalTime = sf::Time::Zero;   
 
     while (view.window.isOpen())
     {

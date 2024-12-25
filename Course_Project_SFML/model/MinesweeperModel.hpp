@@ -13,9 +13,9 @@ public:
     bool gameOver;
     bool gameWon;
 
-    std::vector<std::vector<int>> grid;      // 0: empty, 9: mine
-    std::vector<std::vector<bool>> revealed; // true if the cell is revealed
-    std::vector<std::vector<bool>> flagged;  // true if the cell is flagged
+    std::vector<std::vector<int>> grid;      
+    std::vector<std::vector<bool>> revealed; 
+    std::vector<std::vector<bool>> flagged;  
 
     MinesweeperModel(int rows, int cols, int mines);
     void placeMines();
