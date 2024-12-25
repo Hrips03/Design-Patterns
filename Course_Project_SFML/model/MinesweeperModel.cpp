@@ -84,7 +84,7 @@ void MinesweeperModel::checkGameOver()
     }
 
     // Check for loss condition (game over)
-    if (gameOver)
+    if (gameOver || gameWon)
     {
         revealAllMines(); // Show all mines when the game ends
     }

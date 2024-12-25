@@ -1,9 +1,7 @@
 // main.cpp
-#include "MinesweeperController.hpp"
-#include "MinesweeperModel.hpp"
-#include "MinesweeperView.hpp"
-
-#include "MinesweeperController.hpp"
+#include "./controller/MinesweeperController.hpp"
+#include "./model/MinesweeperModel.hpp"
+#include "./view/MinesweeperView.hpp"
 
 int main()
 {

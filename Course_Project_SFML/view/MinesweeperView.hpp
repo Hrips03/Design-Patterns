@@ -1,17 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "MinesweeperModel.hpp"
+#include "../model/MinesweeperModel.hpp"
 #include <iostream>
+#include <memory>
 
 class MinesweeperView
 {
 private:
-    
-    sf::Font font; 
-    
-
+    sf::Font font;  
 public:
-sf::RectangleShape restartButton;
+    sf::RectangleShape restartButton;
     sf::Text restartText;
     sf::RenderWindow window;
     MinesweeperView(int width, int height);
@@ -21,7 +19,6 @@ sf::RectangleShape restartButton;
     void displayMessage(const std::string &message);
     void handleMouseClick(sf::Mouse::Button button, int x, int y, MinesweeperModel &model);
     void resetButton();
-    sf::RenderWindow getWindow();
 };
 
 

@@ -1,7 +1,8 @@
-#include "MinesweeperController.hpp"
+#include "../controller/MinesweeperController.hpp"
 
 MinesweeperController::MinesweeperController(int rows, int cols, int mines)
     : model(rows, cols, mines), view(cols * 40, rows * 40 + 40) {}
+
 
 void MinesweeperController::run()
 {
