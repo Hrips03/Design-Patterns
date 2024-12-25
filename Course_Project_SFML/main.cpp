@@ -1,11 +1,33 @@
 // main.cpp
 #include "./controller/MinesweeperController.hpp"
-#include "./model/MinesweeperModel.hpp"
-#include "./view/MinesweeperView.hpp"
+#include "./controller/MenuController.hpp"
+
+// int main()
+// {
+//     MenuController menu;
+//     std::vector<int> dimensions = menu.setMenu();
+//     MinesweeperController controller(dimensions[0], dimensions[1], dimensions[2]);
+//     controller.run();
+
+//     return 0;
+// }
 
 int main()
 {
-    MinesweeperController controller(9, 9, 10);
-    controller.run();
+    while (true) // Keep looping until the user exits
+    {
+        MenuController menu;
+        std::vector<int> dimensions = menu.setMenu();
+        std::vector<std::string> userInfo = menu.getUserInfo();
+        
+        if (dimensions.empty()) // User chose to exit
+        {
+            break;
+        }
+
+        MinesweeperController controller(dimensions[0], dimensions[1], dimensions[2], userInfo);
+        controller.run();
+    }
+
     return 0;
 }

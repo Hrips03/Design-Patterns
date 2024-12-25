@@ -3,6 +3,17 @@
 MinesweeperView::MinesweeperView(int width, int height)
 {
     window.create(sf::VideoMode(width, height), "Minesweeper");
+    sf::VideoMode desktopMode = sf::VideoMode::getDesktopMode();
+
+    // Get window dimensions
+    sf::Vector2u windowSize = window.getSize();
+
+    // Calculate centered position
+    int posX = (desktopMode.width - windowSize.x) / 2;
+    int posY = (desktopMode.height - windowSize.y) / 2;
+
+    // Set the window position
+    window.setPosition(sf::Vector2i(posX, posY));
 
     if (!font.loadFromFile("arial.ttf"))
     {
@@ -19,6 +30,16 @@ MinesweeperView::MinesweeperView(int width, int height)
     restartText.setCharacterSize(20);
     restartText.setFillColor(sf::Color::White);
     restartText.setPosition(170.f, 1.f);
+
+    // returnToMenuButton.setSize(sf::Vector2f(150, 40));                // Button size
+    // returnToMenuButton.setPosition(sf::Vector2f(170.f, 0.f)); // Position below the game board
+    // returnToMenuButton.setFillColor(sf::Color(150, 150, 150));        // Light gray
+
+    // returnToMenuText.setFont(font);
+    // returnToMenuText.setCharacterSize(20);
+    // returnToMenuText.setFillColor(sf::Color::Black);
+    // returnToMenuText.setString("Return to Menu");
+    // returnToMenuText.setPosition(returnToMenuButton.getPosition() + sf::Vector2f(10, 5));
 }
 
 sf::Color getNumberColor(int number)
@@ -62,13 +83,23 @@ void MinesweeperView::display(MinesweeperModel &model, sf::Time &elapsed)
 {
     window.clear(sf::Color::White);
 
+    sf::Vector2u windowSize = window.getSize();
+    float restartButtonX = (windowSize.x - restartButton.getSize().x) / 2;
+    restartButton.setPosition(restartButtonX, 0.f);
+
+    // Re-center the restart text within the restart button
+    sf::FloatRect textBounds = restartText.getLocalBounds();
+    restartText.setOrigin(textBounds.left + textBounds.width / 2.f, textBounds.top + textBounds.height / 2.f);
+    restartText.setPosition(restartButton.getPosition().x + restartButton.getSize().x / 2,
+                            restartButton.getPosition().y + restartButton.getSize().y / 2);
+
     if (model.gameOver || model.gameWon)
     {
-        restartButton.setFillColor(sf::Color::Red);  // Change to red when game ends
+        restartButton.setFillColor(sf::Color::Red); // Change to red when game ends
     }
     else
     {
-        restartButton.setFillColor(sf::Color::Green);  // Default color
+        restartButton.setFillColor(sf::Color::Green); // Default color
     }
 
     window.draw(restartButton);
@@ -76,6 +107,18 @@ void MinesweeperView::display(MinesweeperModel &model, sf::Time &elapsed)
 
     displayMinesRemaining(model.minesRemaining);
     displayTimer(elapsed);
+
+    sf::Texture flagTexture;
+    if (!flagTexture.loadFromFile("flag.jpg"))
+    {
+        std::cerr << "Failed to load cell image!" << std::endl;
+    }
+
+    sf::Texture mineTexture;
+    if (!mineTexture.loadFromFile("mine.jpg"))
+    {
+        std::cerr << "Failed to load cell image!" << std::endl;
+    }
 
     // Draw the grid
     for (int i = 0; i < model.rows; ++i)
@@ -89,7 +132,8 @@ void MinesweeperView::display(MinesweeperModel &model, sf::Time &elapsed)
             {
                 if (model.grid[i][j] == 9)
                 {
-                    cell.setFillColor(sf::Color::Black); // Mine
+                    cell.setTexture(&mineTexture);
+                    //cell.setFillColor(sf::Color::Black); // Mine
                 }
                 else
                 {
@@ -113,11 +157,12 @@ void MinesweeperView::display(MinesweeperModel &model, sf::Time &elapsed)
             }
             else if (model.flagged[i][j])
             {
-                cell.setFillColor(sf::Color::Red); // Flagged cell
+                cell.setTexture(&flagTexture);
+                // cell.setFillColor(sf::Color::Red); // Flagged cell
             }
             else
             {
-                cell.setFillColor(sf::Color(100, 100, 100));
+                cell.setFillColor(sf::Color(50, 50, 150));
             }
 
             window.draw(cell);
@@ -200,7 +245,9 @@ void MinesweeperView::displayTimer(sf::Time &elapsed)
     timerText.setString("Time: " + std::to_string(minutes) + ":" + (seconds < 10 ? "0" : "") + std::to_string(seconds));
     timerText.setCharacterSize(20);
     timerText.setFillColor(sf::Color::Black);
-    timerText.setPosition(255.f, 10.f);
+    //timerText.setPosition(255.f, 10.f);
+    sf::Vector2u windowSize = window.getSize();
+    timerText.setPosition(windowSize.x - timerText.getLocalBounds().width - 10.f, 10.f);
 
     // Draw the timer on the window
     window.draw(timerText);
@@ -225,9 +272,9 @@ void MinesweeperView::handleMouseClick(sf::Mouse::Button button, int x, int y, M
         {
             model.resetGame();
         }
-        return;  // Prevent any further clicks when game is over
+        return; // Prevent any further clicks when game is over
     }
-    
+
     int row = (y - 40) / 40;
     int col = x / 40;
 
@@ -248,15 +295,3 @@ void MinesweeperView::resetButton()
 {
     restartButton.setFillColor(sf::Color::Green);
 }
-
-// void MinesweeperView::displayMessage(const std::string &message)
-// {
-//     sf::Text messageText;
-//     messageText.setFont(font);
-//     messageText.setString(message);
-//     messageText.setCharacterSize(20);
-//     messageText.setFillColor(sf::Color::Red);
-//     messageText.setPosition(window.getSize().x / 2 - messageText.getLocalBounds().width / 2,
-//                             window.getSize().y / 2 - messageText.getLocalBounds().height / 2);
-//     window.draw(messageText);
-// }

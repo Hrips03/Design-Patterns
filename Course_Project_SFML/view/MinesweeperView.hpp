@@ -7,8 +7,11 @@
 class MinesweeperView
 {
 private:
-    sf::Font font;  
+    sf::Font font;
+
 public:
+    // sf::RectangleShape returnToMenuButton;
+    // sf::Text returnToMenuText;
     sf::RectangleShape restartButton;
     sf::Text restartText;
     sf::RenderWindow window;
@@ -20,5 +23,3 @@ public:
     void handleMouseClick(sf::Mouse::Button button, int x, int y, MinesweeperModel &model);
     void resetButton();
 };
-
-
